@@ -10,3 +10,21 @@ Android App which will help to see through your webcam in Real Time remotely.
 
 APIs and Tech used:
 1. Swings
+
+
+
+
+
+
+Web app for the Room Guard Project
+
+Contains all the rest end points for the application.
+Integration with Database is here
+Database designed in SQL
+Technologies used:
+
+Spring MVC
+Spring JDBC
+Hibernate
+What to use for securiy and session management? --> JWT Tokens, Shibboleth??
+Angular JS / React for UI with Bootstrap/MaterialsJS
