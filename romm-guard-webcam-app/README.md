@@ -1,0 +1,1 @@
+StandAlone application for room guard which interacts with the web app to sed emails and operations.
