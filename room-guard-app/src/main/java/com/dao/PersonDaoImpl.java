@@ -29,7 +29,9 @@ public class PersonDaoImpl implements PersonDao {
 
     @Override
     public List<Person> listPersons() {
-        return null;
+        Session session = this.sessionFactory.getCurrentSession();
+        List<Person> personsList = (List<Person>) session.createQuery("from Person").list();
+        return personsList;
     }
 
     @Override
