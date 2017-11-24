@@ -19,6 +19,12 @@ public class PersonController {
         this.personService = ps;
     }
 
+
+    @RequestMapping("/")
+    public String homepage(){
+        return "view";
+    }
+
     @RequestMapping(value = "/accounts", method = RequestMethod.GET)
     public String listPersons(Model model) {
         model.addAttribute("person", new Person());
