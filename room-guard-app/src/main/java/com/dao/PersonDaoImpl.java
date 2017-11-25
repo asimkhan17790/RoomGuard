@@ -36,7 +36,9 @@ public class PersonDaoImpl implements PersonDao {
 
     @Override
     public Person getPersonById(int id) {
-        return null;
+        Session session = this.sessionFactory.getCurrentSession();
+        Person p = (Person) session.get(Person.class, new Integer(id));
+        return p;
     }
 
     @Override
