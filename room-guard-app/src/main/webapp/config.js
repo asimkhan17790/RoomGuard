@@ -8,7 +8,7 @@
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/json;charset=utf-8';
         $routeProvider
             .when("/", {
-                templateUrl:"/views/user/templates/landingPage.view.client.html",
+                templateUrl:"./views/user/templates/landingPage.view.client.html",
                 controller:"LandingPageController",
                 controllerAs:"model",
                 data: {
@@ -22,7 +22,9 @@
                 data: {
                     pageTitle: 'Room Guard'
                 }
-            })
+            }).otherwise({
+            redirectTo:"/"
+        });
     }
 
 
