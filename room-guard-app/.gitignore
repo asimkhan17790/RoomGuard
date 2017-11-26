@@ -1,5 +1,5 @@
-*.idea
-/target/
-/basic-web-app.iml
-/room-guard.iml
+.idea
+target
+basic-web-app.iml
+room-guard.iml
 client-secret.json
