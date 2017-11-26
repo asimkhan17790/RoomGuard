@@ -1,5 +1,3 @@
-
 (function() {
-    angular
-        .module("RoomGuardWebApp",['ngRoute','textAngular']);
+    angular.module("RoomGuardWebApp",['ngRoute','ngPageTitle']);
 })();

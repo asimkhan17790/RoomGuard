@@ -12,12 +12,17 @@
                 controller:"LandingPageController",
                 controllerAs:"model",
                 data: {
-                    pageTitle: 'My Music'
+                    pageTitle: 'Room Guard'
                 }
             })
-            .otherwise({
-                redirectTo:"/"
-            });
+            .when("/landingPage", {
+                templateUrl:"/views/user/templates/landingPage.view.client.html",
+                controller:"LandingPageController",
+                controllerAs:"model",
+                data: {
+                    pageTitle: 'Room Guard'
+                }
+            })
     }
 
 
