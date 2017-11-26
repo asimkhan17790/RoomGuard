@@ -4,14 +4,15 @@
         .module("RoomGuardWebApp")
         .controller("LandingPageController",LandingPageController);
 
-    function LandingPageController ($location,$routeParams ,$timeout ) {
+    function LandingPageController ($location, $routeParams, $timeout, UserService) {
         var vm = this;
+        vm.user = {};
+        vm.createUser = createUser;
+        vm.loginPage = function() {
+         }
 
-        function init() {
-
-            console.log("landing Page init called...");
-
+        function createUser () {
+            UserService.createUser(vm.user);
         }
-        init();
     }
 })();

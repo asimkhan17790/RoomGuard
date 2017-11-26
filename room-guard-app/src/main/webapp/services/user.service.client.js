@@ -1,7 +1,4 @@
 /**
- * Created by sumitbhanwala on 4/4/17.
- */
-/**
  * Created by sumitbhanwala on 2/14/17.
  */
 // creating a user service which will be invoked when a user hits on the login page with the valid
@@ -15,14 +12,11 @@
     function userService($http) {
         var api = {
             "createUser" : createUser
-
         }
         return api;
 
-
-
         function createUser(user) {
-            return $http.post("/api/user", user);
+            return $http.post("basic-web-app/user", user);
         }
     }
 })();
