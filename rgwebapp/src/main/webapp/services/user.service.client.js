@@ -16,7 +16,7 @@
         return api;
 
         function createUser(user) {
-            return $http.post("basic-web-app/user", user);
+            return $http.post("/roomGuardWebApp/rest/user", user);
         }
     }
 })();

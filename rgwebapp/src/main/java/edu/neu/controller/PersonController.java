@@ -29,10 +29,8 @@ public class PersonController {
         return this.personService.listPersons();
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/rest/user", method = RequestMethod.POST)
     public ResponseEntity<Void> createUser (@RequestBody Person person ,UriComponentsBuilder ucBuilder) {
-        System.out.println("Person is"+ person);
-        System.out.println("Person is"+ person.getFirstName());
         HttpHeaders headers = new HttpHeaders();
         personService.addPerson(person);
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
