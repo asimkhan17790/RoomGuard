@@ -22,6 +22,14 @@
                 data: {
                     pageTitle: 'Room Guard'
                 }
+            })
+            .when("/user/profilePage", {
+                templateUrl:"/views/user/templates/profilePage.view.client.html",
+                controller:"ProfilePageController",
+                controllerAs:"model",
+                data: {
+                    pageTitle: 'Profile Page'
+                }
             }).otherwise({
             redirectTo:"/"
         });
