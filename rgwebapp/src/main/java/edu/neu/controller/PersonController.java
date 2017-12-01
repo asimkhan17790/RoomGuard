@@ -30,10 +30,13 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/rest/user", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser (@RequestBody Person person ,UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<?> createUser (@RequestBody Person person ,UriComponentsBuilder ucBuilder) {
         HttpHeaders headers = new HttpHeaders();
-        personService.addPerson(person);
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        Person temp =  personService.addPerson(person);
+        if(temp != null)
+        	 return new ResponseEntity<Person>(temp, headers, HttpStatus.CREATED);
+        else
+        	return new ResponseEntity<Person>(null, headers, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/rest/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

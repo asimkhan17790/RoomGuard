@@ -17,14 +17,20 @@ public class PersonDaoImpl implements PersonDao {
     @Resource(name="hibernate4AnnotatedSessionFactory")
     private SessionFactory sessionFactory;
 
-    /*public void setSessionFactory(SessionFactory sf) {
-        this.sessionFactory = sf;
-    }*/
-
+    // TODO Implement the exception and error handling in a better way
     @Override
-    public void addperson(Person p) {
-        Session session = this.sessionFactory.getCurrentSession();
-        session.persist(p);
+    public Person addperson(Person p) {
+    	try {
+            Session session = this.sessionFactory.getCurrentSession();
+            session.persist(p);	
+            return p;
+    	}
+    	catch (Exception e) {
+    		System.out.println("Some exception occured" + e.getStackTrace());
+    	}
+    	// should return an error rather than the person here
+    	// discuss with Asim how to handle this for now returning null
+		return null;
     }
 
     @Override

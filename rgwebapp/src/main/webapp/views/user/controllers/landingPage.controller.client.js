@@ -14,11 +14,11 @@
 
         function createUser () {
             var promise = UserService.createUser(vm.user);
-            console.log(promise);
             promise.then(function (response) {
                 closeModal();
+                // TODO getting the UserId from the response
                 $timeout(function () {
-                        $location.url("/user/profilePage/:UID");
+                        $location.url("/user/profilePage/"+ response.data.id);
                 }, 350);
             },function (error) {
                 console.log(error);

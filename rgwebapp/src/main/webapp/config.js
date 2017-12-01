@@ -16,7 +16,7 @@
                 }
             })
             .when("/landingPage", {
-                templateUrl:"/views/user/templates/landingPage.view.client.html",
+                templateUrl:"./views/user/templates/landingPage.view.client.html",
                 controller:"LandingPageController",
                 controllerAs:"model",
                 data: {
@@ -24,7 +24,7 @@
                 }
             })
             .when("/user/profilePage/:UID", {
-                templateUrl:"/views/user/templates/profilePage.view.client.html",
+                templateUrl:"./views/user/templates/profilePage.view.client.html",
                 controller:"ProfilePageController",
                 controllerAs:"model",
                 data: {

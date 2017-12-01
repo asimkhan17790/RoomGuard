@@ -18,9 +18,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void addPerson(Person p) {
-        System.out.println(p);
-        this.personDao.addperson(p);
+    public Person addPerson(Person p) {
+        return this.personDao.addperson(p);
     }
 
     @Override
