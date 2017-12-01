@@ -11,12 +11,16 @@
 
     function userService($http) {
         var api = {
-            "createUser" : createUser
-        }
+            "createUser" : createUser,
+            "getUserById" : getUserById
+        };
         return api;
 
         function createUser(user) {
             return $http.post("/roomGuardWebApp/rest/user", user);
+        }
+        function getUserById(id) {
+            return $http.get("/roomGuardWebApp/rest/user/"+ id);
         }
     }
 })();
