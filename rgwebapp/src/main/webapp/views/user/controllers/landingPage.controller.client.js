@@ -14,6 +14,7 @@
 
         function createUser () {
             var promise = UserService.createUser(vm.user);
+            console.log(promise);
             promise.then(function (response) {
                 console.log(response);
             },function (error) {
