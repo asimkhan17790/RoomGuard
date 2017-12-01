@@ -23,7 +23,7 @@
                     pageTitle: 'Room Guard'
                 }
             })
-            .when("/user/profilePage", {
+            .when("/user/profilePage/:UID", {
                 templateUrl:"/views/user/templates/profilePage.view.client.html",
                 controller:"ProfilePageController",
                 controllerAs:"model",

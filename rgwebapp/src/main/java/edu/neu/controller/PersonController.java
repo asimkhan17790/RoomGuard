@@ -36,7 +36,7 @@ public class PersonController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/rest/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Person> getUser(@PathVariable("id") int id) {
         System.out.println("Fetching User with id " + id);
         Person person = personService.getPersonById(id);
