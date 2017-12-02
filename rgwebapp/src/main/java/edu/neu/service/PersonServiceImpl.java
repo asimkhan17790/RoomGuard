@@ -24,6 +24,7 @@ public class PersonServiceImpl implements PersonService {
         if(person != null)
         {
             throw new AccountExistsException();
+            
         }
 		return personDao.addperson(person1);
     }

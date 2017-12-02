@@ -12,6 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import edu.neu.exception.AccountExistsException;
 import edu.neu.exception.ConflictException;
+import edu.neu.exception.PersonErrorInformation;
 import edu.neu.model.Person;
 import edu.neu.service.PersonService;
 
@@ -49,10 +50,13 @@ public class PersonController {
         return new ResponseEntity<Person>(person, HttpStatus.OK);
     }
     
-    @ResponseStatus(value=HttpStatus.CONFLICT,reason="Data integrity violation") 
     @ExceptionHandler(ConflictException.class)
-	public void handleCustomException(ConflictException ex) {
+	public ResponseEntity<PersonErrorInformation> handleCustomException(ConflictException ex) {
     	// we can write custom code here for the error handling;
+    	PersonErrorInformation pei = new PersonErrorInformation();
+    	pei.setDescription("Data integrity violation");
+    	pei.setErrorCode(HttpStatus.CONFLICT);
+        return new ResponseEntity<PersonErrorInformation>(pei, HttpStatus.CONFLICT);
 	}
 
 }
