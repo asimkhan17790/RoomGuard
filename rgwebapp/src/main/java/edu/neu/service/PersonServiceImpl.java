@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.neu.dao.PersonDao;
+import edu.neu.exception.AccountExistsException;
 import edu.neu.model.Person;
 
 import java.util.List;
@@ -18,8 +19,13 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public Person addPerson(Person p) {
-        return this.personDao.addperson(p);
+    public Person addPerson(Person person1) {
+    	Person person = personDao.findAccountByEmail(person1.getEmailAddress());
+        if(person != null)
+        {
+            throw new AccountExistsException();
+        }
+		return personDao.addperson(person1);
     }
 
     @Override

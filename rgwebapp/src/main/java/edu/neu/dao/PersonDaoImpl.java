@@ -2,6 +2,7 @@ package edu.neu.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import edu.neu.model.Person;
 
 import javax.annotation.Resource;
+import javax.persistence.PersistenceContext;
 import java.util.List;
-
 @Repository("personDao")
 public class PersonDaoImpl implements PersonDao {
 
@@ -20,17 +21,9 @@ public class PersonDaoImpl implements PersonDao {
     // TODO Implement the exception and error handling in a better way
     @Override
     public Person addperson(Person p) {
-    	try {
-            Session session = this.sessionFactory.getCurrentSession();
-            session.persist(p);	
-            return p;
-    	}
-    	catch (Exception e) {
-    		System.out.println("Some exception occured" + e.getStackTrace());
-    	}
-    	// should return an error rather than the person here
-    	// discuss with Asim how to handle this for now returning null
-		return null;
+    	Session session =  this.sessionFactory.getCurrentSession();
+    	session.persist(p);	
+        return p;
     }
 
     @Override
@@ -56,4 +49,18 @@ public class PersonDaoImpl implements PersonDao {
     public void removePerson(int id) {
 
     }
+    
+    @Override
+	public Person findAccountByEmail(String emailAddress) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from Person where emailAddress = :code ");
+        query.setParameter("code", emailAddress);
+        List<Person> listOfPerson = query.list();
+        if(listOfPerson.size() == 0) {
+            return null;
+        } else {
+            return listOfPerson.get(0);
+        }
+	}
+    
 }

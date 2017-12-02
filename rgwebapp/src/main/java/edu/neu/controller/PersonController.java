@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import edu.neu.exception.AccountExistsException;
+import edu.neu.exception.ConflictException;
 import edu.neu.model.Person;
 import edu.neu.service.PersonService;
 
@@ -30,13 +32,14 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/rest/user", method = RequestMethod.POST)
-    public ResponseEntity<?> createUser (@RequestBody Person person ,UriComponentsBuilder ucBuilder) {
-        HttpHeaders headers = new HttpHeaders();
-        Person temp =  personService.addPerson(person);
-        if(temp != null)
-        	 return new ResponseEntity<Person>(temp, headers, HttpStatus.CREATED);
-        else
-        	return new ResponseEntity<Person>(null, headers, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> createUser (@RequestBody Person person ,UriComponentsBuilder ucBuilder) {	
+    	try {
+            Person p = personService.addPerson(person);
+            HttpHeaders headers = new HttpHeaders();
+       	 	return new ResponseEntity<Person>(p, headers, HttpStatus.CREATED);
+        } catch(AccountExistsException exception) {
+            throw new ConflictException();
+        }
     }
 
     @RequestMapping(value = "/rest/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,5 +48,11 @@ public class PersonController {
         Person person = personService.getPersonById(id);
         return new ResponseEntity<Person>(person, HttpStatus.OK);
     }
+    
+    @ResponseStatus(value=HttpStatus.CONFLICT,reason="Data integrity violation") 
+    @ExceptionHandler(ConflictException.class)
+	public void handleCustomException(ConflictException ex) {
+    	// we can write custom code here for the error handling;
+	}
 
 }

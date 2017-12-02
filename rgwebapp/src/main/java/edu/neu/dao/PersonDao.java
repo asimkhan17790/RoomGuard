@@ -11,4 +11,5 @@ public interface PersonDao {
     public List<Person> listPersons();
     public Person getPersonById(int id);
     public void removePerson(int id);
+	public Person findAccountByEmail(String emailAddress);
 }
