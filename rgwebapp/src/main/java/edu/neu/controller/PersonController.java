@@ -32,6 +32,12 @@ public class PersonController {
         return this.personService.listPersons();
     }
 
+    /**
+     * Create a user with the given credentials
+     * @param person :- The information regarding to the user with primary key as emailAddress
+     * @return if no conflict in email address than returns the autoincremented id of the user
+     *  or if there is an user with the same email address return a 409 confict code
+     */
     @RequestMapping(value = "/rest/user", method = RequestMethod.POST)
     public ResponseEntity<?> createUser (@RequestBody Person person ,UriComponentsBuilder ucBuilder) {	
     	try {
