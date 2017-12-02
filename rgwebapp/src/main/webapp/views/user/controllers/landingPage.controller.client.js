@@ -9,7 +9,17 @@
         var vm = this;
         vm.user = {};
         vm.createUser = createUser;
-        vm.loginPage = function() {
+        vm.login = function() {
+            var promise = UserService.findUserByCredentials(vm.user.emailAddress, vm.user.password);
+            promise.then(function (response) {
+                closeModal();
+                // TODO getting the UserId from the response
+                $timeout(function () {
+                    $location.url("/user/profilePage/"+ response.data.id);
+                }, 350);
+            },function (error) {
+                console.log(error);
+            })
          };
 
         function createUser () {
@@ -23,7 +33,7 @@
             },function (error) {
                 console.log(error);
             })
-        }
+        };
 
         // Function for closing the modal
         function closeModal() {

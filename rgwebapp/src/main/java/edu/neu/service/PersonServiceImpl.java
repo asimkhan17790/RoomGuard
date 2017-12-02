@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.neu.dao.PersonDao;
+import edu.neu.exception.AccountDoesNotExistException;
 import edu.neu.exception.AccountExistsException;
 import edu.neu.model.Person;
 import java.util.List;
@@ -47,5 +48,16 @@ public class PersonServiceImpl implements PersonService {
 	@Transactional
 	public void removePerson(int id) {
 		this.personDao.removePerson(id);
+	}
+
+	@Override
+	@Transactional
+	public Person getPersonByEmail(String emailAddress) {
+		Person person = personDao.findAccountByEmail(emailAddress);
+		if (person == null) {
+			throw new AccountDoesNotExistException();
+		} else {
+			return person;
+		}
 	}
 }

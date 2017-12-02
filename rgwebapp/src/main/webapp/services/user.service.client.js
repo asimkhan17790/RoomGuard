@@ -25,9 +25,9 @@
             return $http.get("/roomGuardWebApp/rest/user/"+ id);
         }
 
-        function findUserByCredentials(username , password) {
+        function findUserByCredentials(emailAddress , password) {
             var user ={
-                username: username,
+                emailAddress: emailAddress,
                 password: password
             };
             return $http.post("/roomGuardWebApp/rest/user/login",user);
