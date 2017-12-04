@@ -27,6 +27,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<property name="annotatedClasses">
 			<list>
 				<value>edu.neu.model.Person</value>
+				<value>edu.neu.model.Detail</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
