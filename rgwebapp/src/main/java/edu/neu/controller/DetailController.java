@@ -15,7 +15,7 @@ import edu.neu.exception.AccountExistsException;
 import edu.neu.exception.ConflictException;
 import edu.neu.exception.PersonErrorInformation;
 import edu.neu.model.Person;
-import edu.neu.service.PersonService;
+import edu.neu.service.DetailService;
 
 import java.util.List;
 
