@@ -13,7 +13,8 @@
                fields: {'emailAddress': 'sumit.pec001@gmail.com'}, // additional data to send
                file: vm.file
            }).then(function (data) {
-           vm.image = data.data.image;
+           var image = data.data.image;
+           vm.imageURL = 'data:image/jpeg;base64,' + image;
        })
        };
 
