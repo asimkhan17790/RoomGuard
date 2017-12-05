@@ -12,7 +12,9 @@
                url: 'http://localhost:8080/roomGuardWebApp/rest/detail',
                fields: {'emailAddress': 'sumit.pec001@gmail.com'}, // additional data to send
                file: vm.file
-           })
+           }).then(function (data) {
+           vm.image = data.data.image;
+       })
        };
 
         var init = function () {
