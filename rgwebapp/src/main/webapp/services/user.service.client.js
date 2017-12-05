@@ -13,7 +13,7 @@
         var api = {
             "createUser": createUser,
             "getUserById": getUserById,
-            "findUserByCredentials": findUserByCredentials
+            "findUserByCredentials": findUserByCredentials,
         };
         return api;
 

@@ -15,4 +15,9 @@
             </div>
         </nav>
     </div>
+
+    <input type="file" class="text-center center-block well well-sm"
+           ngf-select name="file" id="file" ng-model="model.file" accept="image/*">
+
+    <input class="btn btn-danger" value="Save Changes" ng-click="model.uploadImage()">
 </div>
