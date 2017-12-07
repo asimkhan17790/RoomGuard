@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.core.JsonParser;
+
 import edu.neu.exception.AccountDoesNotExistException;
 import edu.neu.exception.AccountExistsException;
 import edu.neu.exception.ConflictException;
@@ -47,5 +49,12 @@ public class DetailController {
         List<Detail> details = detailService.listDetails(emailAddress);
         return new ResponseEntity<List<Detail>>(details, HttpStatus.OK);
     }
+    
+//    By using below method we can get an object directly without mapping to the POJO
+//    @RequestMapping(value = "/rest/dummy", method = RequestMethod.POST)
+//    public String save(@RequestBody String json){
+//    	System.out.println(json);
+//    	return "success";
+//    }
 
 }
