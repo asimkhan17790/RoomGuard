@@ -5,6 +5,7 @@
         .config(configuration);
     function configuration($routeProvider,$httpProvider,$compileProvider) {
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|file|ftp|blob):|data:image\//);
+        $httpProvider.defaults.withCredentials = true;
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/json;charset=utf-8';
         $routeProvider

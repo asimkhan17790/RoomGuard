@@ -19,6 +19,9 @@ import edu.neu.service.PersonService;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 public class PersonController {
 
@@ -56,7 +59,7 @@ public class PersonController {
      * @return :- User id for the given credentials
      */
     @RequestMapping(value = "/rest/user/login", method = RequestMethod.POST)
-    public ResponseEntity<?> loginUser (@RequestBody Person person ,UriComponentsBuilder ucBuilder) {	
+    public ResponseEntity<?> loginUser (@RequestBody Person person ,HttpServletResponse response,UriComponentsBuilder ucBuilder) {	
     	try {
             Person p = personService.getPersonByEmail(person.getEmailAddress());
             if(p == null) {
@@ -64,6 +67,8 @@ public class PersonController {
             } else {
             	if (p.getPassword().equals(person.getPassword())) {
             		 HttpHeaders headers = new HttpHeaders();
+            		 Cookie basic= new Cookie("user",p.getEmailAddress());
+            		 response.addCookie(basic);
                      return new ResponseEntity<Person>(p, headers, HttpStatus.CREATED);
             	} else {
             		PersonErrorInformation pei = new PersonErrorInformation();
