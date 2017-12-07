@@ -29,9 +29,7 @@ public class DetailController {
     private DetailService detailService;
 
     @RequestMapping(value = "/rest/detail", method = RequestMethod.POST)
-    public ResponseEntity<?> createDetail (@RequestParam("file") MultipartFile[] uploadFiles ,  @RequestParam("emailAddress") String emailAddress, UriComponentsBuilder ucBuilder) throws IOException {	
-    	System.out.println("Multipart file are" + uploadFiles[0].getBytes());
-    	System.out.println("emailAddress is " + emailAddress);
+    public ResponseEntity<?> createDetail (@RequestParam("file") MultipartFile[] uploadFiles, @RequestParam("emailAddress") String emailAddress, UriComponentsBuilder ucBuilder) throws IOException {	
     	try {
     		Detail temp = new Detail();
     		temp.setEmailAddress(emailAddress);
@@ -43,6 +41,11 @@ public class DetailController {
             throw new ConflictException();
         }
     }
-   
+    
+    @RequestMapping(value = "/rest/getDetails", method = RequestMethod.GET)
+    public ResponseEntity<?> getUserDetail(@RequestParam("emailAddress") String emailAddress, UriComponentsBuilder ucBuilder) {
+        List<Detail> details = detailService.listDetails(emailAddress);
+        return new ResponseEntity<List<Detail>>(details, HttpStatus.OK);
+    }
 
 }

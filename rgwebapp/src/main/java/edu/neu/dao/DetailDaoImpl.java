@@ -31,7 +31,7 @@ public class DetailDaoImpl implements DetailDao{
 	public List<Detail> listDetails(String emailAddress) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
-        Query query = session.createQuery("from Details where emailAddress = :code ");
+        Query query = session.createQuery("from Detail where emailAddress = :code ");
         query.setParameter("code", emailAddress);
         List<Detail> listOfPerson = query.list();
         if(listOfPerson.size() == 0) {

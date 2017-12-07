@@ -30,7 +30,7 @@ public class DetailServiceImpl implements DetailService{
 	@Transactional
 	public List<Detail> listDetails(String emailAddress) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.detailDao.listDetails(emailAddress);
 	}
 
 }
