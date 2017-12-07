@@ -20,7 +20,9 @@ import edu.neu.service.PersonService;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @RestController
 public class PersonController {
@@ -59,7 +61,7 @@ public class PersonController {
      * @return :- User id for the given credentials
      */
     @RequestMapping(value = "/rest/user/login", method = RequestMethod.POST)
-    public ResponseEntity<?> loginUser (@RequestBody Person person ,HttpServletResponse response,UriComponentsBuilder ucBuilder) {	
+    public ResponseEntity<?> loginUser (@RequestBody Person person ,HttpServletResponse response, HttpServletRequest request,UriComponentsBuilder ucBuilder) {	
     	try {
             Person p = personService.getPersonByEmail(person.getEmailAddress());
             if(p == null) {
@@ -67,8 +69,12 @@ public class PersonController {
             } else {
             	if (p.getPassword().equals(person.getPassword())) {
             		 HttpHeaders headers = new HttpHeaders();
-            		 Cookie basic= new Cookie("user",p.getEmailAddress());
-            		 response.addCookie(basic);
+            		 HttpSession session = request.getSession();
+         			session.setAttribute("user", p.getFirstName());
+         			session.setMaxInactiveInterval(30*60);
+         			Cookie userName = new Cookie("user", p.getEmailAddress());
+         			userName.setMaxAge(30*60);
+         			response.addCookie(userName);
                      return new ResponseEntity<Person>(p, headers, HttpStatus.CREATED);
             	} else {
             		PersonErrorInformation pei = new PersonErrorInformation();
@@ -87,6 +93,7 @@ public class PersonController {
 
     @RequestMapping(value = "/rest/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Person> getUser(@PathVariable("id") int id) {
+    	
         System.out.println("Fetching User with id " + id);
         Person person = personService.getPersonById(id);
         return new ResponseEntity<Person>(person, HttpStatus.OK);
