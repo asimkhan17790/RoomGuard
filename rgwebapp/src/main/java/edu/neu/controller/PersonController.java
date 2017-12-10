@@ -9,16 +9,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import edu.neu.exception.AccountDoesNotExistException;
 import edu.neu.exception.AccountExistsException;
 import edu.neu.exception.ConflictException;
 import edu.neu.exception.PersonErrorInformation;
 import edu.neu.model.Person;
 import edu.neu.service.PersonService;
-
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
 import java.util.List;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,12 +69,10 @@ public class PersonController {
             } else {
             	if (p.getPassword().equals(person.getPassword())) {
             		 HttpHeaders headers = new HttpHeaders();
-            		 HttpSession session = request.getSession();
-         			session.setAttribute("user", p.getFirstName());
-         			session.setMaxInactiveInterval(30*60);
-         			Cookie userName = new Cookie("user", p.getEmailAddress());
-         			userName.setMaxAge(30*60);
-         			response.addCookie(userName);
+            		 String token =  Jwts.builder().setSubject(p.getEmailAddress())
+         		            .setIssuedAt(new Date())
+         		            .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
+            		 response.setHeader("Token", token);
                      return new ResponseEntity<Person>(p, headers, HttpStatus.CREATED);
             	} else {
             		PersonErrorInformation pei = new PersonErrorInformation();
