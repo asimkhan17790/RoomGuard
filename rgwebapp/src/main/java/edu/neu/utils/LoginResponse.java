@@ -2,11 +2,11 @@ package edu.neu.utils;
 
 public class LoginResponse {
     public String token;
-    public String id;
+    public String email;
 
     public LoginResponse(final String token , final String emailAddress) {
         this.token = token;
-        this.id = emailAddress;
+        this.email = emailAddress;
     }
 }
 

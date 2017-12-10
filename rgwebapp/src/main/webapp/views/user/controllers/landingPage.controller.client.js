@@ -16,7 +16,7 @@
                 closeModal();
                 // TODO getting the UserId from the response
                 $timeout(function () {
-                    $location.url("/user/profilePage/"+ response.data.id);
+                    $location.url("/user/profilePage/"+ response.data.email);
                 }, 350);
             },function (error) {
                 console.log(error);
@@ -29,7 +29,7 @@
                 closeModal();
                 // TODO getting the UserId from the response
                 $timeout(function () {
-                        $location.url("/user/profilePage/"+ response.data.id);
+                        $location.url("/user/profilePage/"+ response.data.email);
                 }, 350);
             },function (error) {
                 console.log(error);

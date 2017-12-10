@@ -6,7 +6,7 @@
 
     function ProfilePageController ($location, $routeParams, $timeout, UserService, Upload) {
         var vm = this,
-            id = $routeParams.UID;
+            email = $routeParams.UID;
        vm.uploadImage =  function () {
            Upload.upload({
                url: 'http://localhost:8080/roomGuardWebApp/rest/detail',
@@ -19,11 +19,11 @@
        };
 
         var init = function () {
-          getUserById(id);
+            getUserByEmail(email);
         };
         
-        function getUserById(id) {
-            var promise = UserService.getUserById(id);
+        function getUserByEmail(email) {
+            var promise = UserService.getUserByEmail(email);
             promise.then(function (response) {
                 vm.user = response.data;
             },function (error) {

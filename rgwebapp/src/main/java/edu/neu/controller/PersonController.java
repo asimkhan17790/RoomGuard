@@ -88,11 +88,11 @@ public class PersonController {
             return new ResponseEntity<PersonErrorInformation>(pei, HttpStatus.NOT_FOUND);
         }
     }
-
-    @RequestMapping(value = "/rest/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Person> getUser(@PathVariable("id") int id) {
-        System.out.println("Fetching User with id " + id);
-        Person person = personService.getPersonById(id);
+    
+	@SuppressWarnings("unchecked")
+    @RequestMapping(value = "/rest/user/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Person> getUser(@PathVariable("email") String emailAddress) {
+        Person person = personService.getPersonByEmail(emailAddress);
         return new ResponseEntity<Person>(person, HttpStatus.OK);
     }
     
