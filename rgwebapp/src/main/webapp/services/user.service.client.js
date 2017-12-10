@@ -21,8 +21,9 @@
             return $http.post("/roomGuardWebApp/rest/user", user);
         }
 
+        // adding trailing slash as spring is truncating the part after.
         function getUserByEmail(email) {
-            return $http.get("/roomGuardWebApp/rest/user/"+ email);
+            return $http.get("/roomGuardWebApp/rest/user/"+ email + "/");
         }
 
         function findUserByCredentials(emailAddress , password) {

@@ -70,6 +70,7 @@ public class PersonController {
             } else {
             	if (p.getPassword().equals(person.getPassword())) {
             		 String token =  Jwts.builder().setSubject(p.getEmailAddress())
+            				.claim("roles", p.getEmailAddress())
          		            .setIssuedAt(new Date())
          		            .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
             		 LoginResponse login = new LoginResponse(token, p.getEmailAddress());	
@@ -89,8 +90,7 @@ public class PersonController {
         }
     }
     
-	@SuppressWarnings("unchecked")
-    @RequestMapping(value = "/rest/user/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/rest/user/{email}/", method = RequestMethod.GET)
     public ResponseEntity<Person> getUser(@PathVariable("email") String emailAddress) {
         Person person = personService.getPersonByEmail(emailAddress);
         return new ResponseEntity<Person>(person, HttpStatus.OK);
