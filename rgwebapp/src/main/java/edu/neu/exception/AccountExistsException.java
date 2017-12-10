@@ -1,7 +1,12 @@
 package edu.neu.exception;
 
 public class AccountExistsException extends RuntimeException {
-    public AccountExistsException(String message, Throwable cause) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public AccountExistsException(String message, Throwable cause) {
         super(message, cause);
     }
 

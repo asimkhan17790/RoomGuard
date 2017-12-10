@@ -8,10 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import edu.neu.model.EMail;
 import edu.neu.service.MailService;
+import edu.neu.service.PersonService;
 
 import javax.annotation.Resource;
 
@@ -20,13 +22,19 @@ public class MailController {
 
     @Autowired
     private MailService mailService;
+    
+    @Autowired
+    private PersonService personService;
 
 
-    @RequestMapping(value = "/sendmail", method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity<Void> sendMovementEmail (@RequestBody EMail mail) {
+    @RequestMapping(value = "/rest/sendmail", method = RequestMethod.POST, headers = "Accept=application/json")
+    public ResponseEntity<Void> sendMovementEmail (@RequestParam("file") MultipartFile[] intruderImage, @RequestParam("emailAddress") String emailAddress) {
         //System.out.println("Person is"+ person);
         //System.out.println("Person is"+ person.getFirstName());
-        mailService.sendEmail(new EMail());
+    	EMail emailData = new EMail();
+    	emailData.setPerson(personService.getPersonByEmail(emailAddress));
+    	
+        mailService.sendEmail(emailData);
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<Void>(headers, HttpStatus.OK);
     }
