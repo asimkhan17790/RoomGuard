@@ -15,6 +15,7 @@ import edu.neu.exception.ConflictException;
 import edu.neu.exception.PersonErrorInformation;
 import edu.neu.model.Person;
 import edu.neu.service.PersonService;
+import edu.neu.utils.LoginResponse;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
@@ -68,12 +69,11 @@ public class PersonController {
             	throw new AccountDoesNotExistException();
             } else {
             	if (p.getPassword().equals(person.getPassword())) {
-            		 HttpHeaders headers = new HttpHeaders();
             		 String token =  Jwts.builder().setSubject(p.getEmailAddress())
          		            .setIssuedAt(new Date())
          		            .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
-            		 response.setHeader("Token", token);
-                     return new ResponseEntity<Person>(p, headers, HttpStatus.CREATED);
+            		 LoginResponse login = new LoginResponse(token, p.getEmailAddress());	
+            		 return new ResponseEntity<LoginResponse>(login,HttpStatus.CREATED);
             	} else {
             		PersonErrorInformation pei = new PersonErrorInformation();
                 	pei.setDescription("Invalid Credentials");
@@ -91,7 +91,6 @@ public class PersonController {
 
     @RequestMapping(value = "/rest/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Person> getUser(@PathVariable("id") int id) {
-    	
         System.out.println("Fetching User with id " + id);
         Person person = personService.getPersonById(id);
         return new ResponseEntity<Person>(person, HttpStatus.OK);
