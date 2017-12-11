@@ -8,10 +8,17 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpStatus;
 import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.servlet.HandlerMapping;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import edu.neu.exception.InvalidTokenException;
+import edu.neu.exception.PersonErrorInformation;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
@@ -32,21 +39,43 @@ public class JwtFilter extends GenericFilterBean {
         	chain.doFilter(req, res);
         } else {
         	final String authHeader = request.getHeader("Authorization");
+        	try {
+        		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                    throw new InvalidTokenException("Missing or invalid Authorization header.");
+                }
+            }
+        	catch (InvalidTokenException e) {
+            	HttpServletResponse response = (HttpServletResponse) res;
+            	response.setStatus(500);
+            	response.getWriter().write(convertObjectToJson(e));
+            }
+        	
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                throw new ServletException("Missing or invalid Authorization header.");
+                throw new InvalidTokenException("Missing or invalid Authorization header.");
             }
             final String token = authHeader.substring(7); // The part after "Bearer "
             try {
-//                final Claims claims = Jwts.parser().setSigningKey("secretkey")
-//                    .parseClaimsJws(token).getBody();
-//                request.setAttribute("emailAddress", claims);
+                final Claims claims = Jwts.parser().setSigningKey("secretkey")
+                    .parseClaimsJws(token).getBody();
+                request.setAttribute("emailAddress", claims);
             }
-            catch (final SignatureException e) {
-                throw new ServletException("Invalid token.");
+            catch (Exception e) {
+            	e.setStackTrace(new StackTraceElement[0]);
+            	HttpServletResponse response = (HttpServletResponse) res;
+            	response.setStatus(500);
+            	response.getWriter().write(convertObjectToJson(e));
             }
             chain.doFilter(req, res);
         }
         
+    }
+    
+    public String convertObjectToJson(Object object) throws JsonProcessingException {
+        if (object == null) {
+            return null;
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(object);
     }
 
 }
