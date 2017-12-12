@@ -13,6 +13,7 @@
             var promise = UserService.findUserByCredentials(vm.user.emailAddress, vm.user.password);
             promise.then(function (response) {
                  $window.sessionStorage.token = response.data.token;
+                 // you can use the below code to store data in the local storage rather the session storage
                  // $localStorage.currentUser = {email :vm.user.emailAddress, token: response.data.token};
                 closeModal();
                 // TODO getting the UserId from the response

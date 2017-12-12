@@ -33,29 +33,17 @@ public class JwtFilter extends GenericFilterBean {
         String path = ((HttpServletRequest) request).getRequestURI();
         // if the api end point corresponds to the login or the
         // register than it wont contain the auth token so 
-        // just continue with the end point as normal
-        
+        // just continue with the end point as normal 
         if (path.contains("login") || path.contains("register")) {
         	chain.doFilter(req, res);
         } else {
         	final String authHeader = request.getHeader("Authorization");
-        	try {
-        		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        	if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                     throw new InvalidTokenException("Missing or invalid Authorization header.");
-                }
-            }
-        	catch (InvalidTokenException e) {
-            	HttpServletResponse response = (HttpServletResponse) res;
-            	response.setStatus(500);
-            	response.getWriter().write(convertObjectToJson(e));
-            }
-        	
-            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                throw new InvalidTokenException("Missing or invalid Authorization header.");
-            }
+             }
             final String token = authHeader.substring(7); // The part after "Bearer "
             try {
-                final Claims claims = Jwts.parser().setSigningKey("secretkey")
+                final Claims claims = Jwts.parser().setSigningKey("asdsd")
                     .parseClaimsJws(token).getBody();
                 request.setAttribute("emailAddress", claims);
             }
