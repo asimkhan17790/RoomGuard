@@ -1,0 +1,10 @@
+.idea
+/target/
+*.iml
+room-guard.iml
+client-secret.json
+*.classpath
+/.settings/
+/src/main/java/edu/neu/utils/client-secret.json
+.project
+/roomGuardWEbCamApp/
