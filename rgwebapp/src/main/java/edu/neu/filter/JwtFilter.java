@@ -43,9 +43,10 @@ public class JwtFilter extends GenericFilterBean {
              }
             final String token = authHeader.substring(7); // The part after "Bearer "
             try {
-                final Claims claims = Jwts.parser().setSigningKey("asdsd")
+                final Claims claims = Jwts.parser().setSigningKey("secretkey")
                     .parseClaimsJws(token).getBody();
                 request.setAttribute("emailAddress", claims);
+                chain.doFilter(req, res);
             }
             catch (Exception e) {
             	e.setStackTrace(new StackTraceElement[0]);
@@ -53,7 +54,6 @@ public class JwtFilter extends GenericFilterBean {
             	response.setStatus(500);
             	response.getWriter().write(convertObjectToJson(e));
             }
-            chain.doFilter(req, res);
         }
         
     }

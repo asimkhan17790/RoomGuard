@@ -27,6 +27,7 @@
             promise.then(function (response) {
                 vm.user = response.data;
             },function (error) {
+                $location.url("/");
                 console.log(error);
             })
         };

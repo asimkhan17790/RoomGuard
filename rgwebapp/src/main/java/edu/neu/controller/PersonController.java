@@ -62,7 +62,7 @@ public class PersonController {
      * @return :- User id for the given credentials
      */
     @RequestMapping(value = "/rest/user/login", method = RequestMethod.POST)
-    public ResponseEntity<?> loginUser (@RequestBody Person person ,HttpServletResponse response, HttpServletRequest request,UriComponentsBuilder ucBuilder) {	
+    public ResponseEntity<?> loginUser (@RequestBody Person person ,HttpServletResponse response, HttpServletRequest request,UriComponentsBuilder ucBuilder) {
     	try {
             Person p = personService.getPersonByEmail(person.getEmailAddress());
             if(p == null) {
