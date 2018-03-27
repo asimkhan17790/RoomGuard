@@ -41,7 +41,7 @@ public class MailServiceImpl implements MailService {
              }
              MimeMessage m = null;
              try {
-                 m = GmailModule.createEmail("asim.khan17@hotmail.com", mail.getPerson().getEmailAddress(), "Hello From Java", "Hi,, Checking the Gmail API in Java");
+                 m = GmailModule.createEmail("asim.khan17@hotmail.com", mail.getPerson().getEmailAddress(), "Hello From Java", "Hi,, Checking the Gmail API in Java",null);
              } catch (MessagingException e) {
                  e.printStackTrace();
              }
