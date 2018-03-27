@@ -1,3 +1,3 @@
 (function() {
-    angular.module("RoomGuardWebApp",['ngRoute','ngPageTitle','ngFileUpload']);
+    angular.module("RoomGuardWebApp",['ngRoute','ngPageTitle','ngFileUpload','angular-storage']);
 })();

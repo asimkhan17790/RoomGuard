@@ -4,7 +4,7 @@
         .module("RoomGuardWebApp")
         .controller("LandingPageController",LandingPageController);
 
-    function LandingPageController ($location, $routeParams, $timeout, UserService) {
+    function LandingPageController ($http,$location, $routeParams, $timeout, UserService, $window) {
         // By default we will be handling all the promise using than
         var vm = this;
         vm.user = {};
@@ -12,10 +12,13 @@
         vm.login = function() {
             var promise = UserService.findUserByCredentials(vm.user.emailAddress, vm.user.password);
             promise.then(function (response) {
+                 $window.sessionStorage.token = response.data.token;
+                 // you can use the below code to store data in the local storage rather the session storage
+                 // $localStorage.currentUser = {email :vm.user.emailAddress, token: response.data.token};
                 closeModal();
                 // TODO getting the UserId from the response
                 $timeout(function () {
-                    $location.url("/user/profilePage/"+ response.data.id);
+                    $location.url("/user/profilePage/"+ response.data.email);
                 }, 350);
             },function (error) {
                 console.log(error);
@@ -28,7 +31,7 @@
                 closeModal();
                 // TODO getting the UserId from the response
                 $timeout(function () {
-                        $location.url("/user/profilePage/"+ response.data.id);
+                        $location.url("/user/profilePage/"+ response.data.email);
                 }, 350);
             },function (error) {
                 console.log(error);

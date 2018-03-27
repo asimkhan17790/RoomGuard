@@ -12,8 +12,8 @@
     function userService($http) {
         var api = {
             "createUser": createUser,
-            "getUserById": getUserById,
-            "findUserByCredentials": findUserByCredentials,
+            "getUserByEmail": getUserByEmail,
+            "findUserByCredentials": findUserByCredentials
         };
         return api;
 
@@ -21,8 +21,9 @@
             return $http.post("/roomGuardWebApp/rest/user", user);
         }
 
-        function getUserById(id) {
-            return $http.get("/roomGuardWebApp/rest/user/"+ id);
+        // adding trailing slash as spring is truncating the part after.
+        function getUserByEmail(email) {
+            return $http.get("/roomGuardWebApp/rest/user/"+ email + "/");
         }
 
         function findUserByCredentials(emailAddress , password) {
